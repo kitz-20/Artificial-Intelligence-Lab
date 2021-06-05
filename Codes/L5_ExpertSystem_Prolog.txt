@@ -1,0 +1,267 @@
+/*
+Disease Diagnosis expert system
+AI LAB Assignment 5
+Name: Ketaki Patil
+Roll No. PA 17
+Batch 1
+*/
+
+go:-
+hypothesis(Disease),
+write('The patient might be having '),
+write(Disease),
+nl,
+undo.
+
+/*Hypothesis that should be tested*/
+hypothesis(cold) :- cold, !.
+hypothesis(flu) :- flu, !.
+hypothesis(typhoid) :- typhoid, !.
+hypothesis(measles) :- measles, !.
+hypothesis(german_measles) :- german_measles, !.
+hypothesis(malaria) :- malaria, !.
+hypothesis(mumps) :- mumps, !.
+hypothesis(chicken_pox) :- chicken_pox, !.
+hypothesis(tuberculosis) :- tuberculosis, !.
+hypothesis(pneumonia) :- pneumonia, !.
+hypothesis(byssinosis) :- byssinosis, !.
+hypothesis(pertusis) :- pertusis, !.
+hypothesis(pneumoconiosis) :- pneumoconiosis, !.
+hypothesis(sarcoidosis) :- sarcoidosis, !.
+hypothesis(asbestosis) :- asbestosis, !.
+hypothesis(asthma) :- asthma, !.
+hypothesis(bronchiolitis) :- bronchiolitis, !.
+hypothesis(influenza) :- influenza, !.
+hypothesis(lung_cancer) :- lung_cancer, !.
+hypothesis(covid) :- covid, !.
+hypothesis(diabetes) :- diabetes, !.
+hypothesis(epilepsy) :- epilepsy, !.
+hypothesis(glaucoma) :- glaucoma, !.
+hypothesis(heart_stroke) :- heart_stroke, !.
+hypothesis(hyperthyroidism) :- hyperthyroidism, !.
+hypothesis(hypothermia) :- hypothermia, !.
+hypothesis(jaundice) :- jaundice, !.
+hypothesis(sinusitis) :- sinusitis, !.
+hypothesis(unknown). /* no diagnosis*/
+/*Hypothesis Identification Rules*/
+
+cold :-
+verify(headache),
+verify(runny_nose),
+verify(sneezing),
+verify(sore_throat),
+nl.
+
+flu :-
+verify(fever),
+verify(headache),
+verify(chills),
+verify(body_ache),
+nl.
+
+typhoid :-
+verify(headache),
+verify(abdominal_pain),
+verify(poor_appetite),
+verify(fever),
+nl.
+
+measles :-
+verify(fever),
+verify(runny_nose),
+verify(rash),
+verify(conjunctivitis),
+nl.
+
+german_measles :-
+verify(fever),
+verify(runny_nose),
+verify(rash),
+verify(headhache),
+nl.
+
+malaria :-
+verify(fever),
+verify(sweating),
+verify(headache),
+verify(nausea),
+verify(vomiting),
+verify(diarrhea),
+nl.
+
+mumps :-
+verify(fever),
+verify(swollen_glands),
+nl.
+
+chicken_pox :-
+verify(fever),
+verify(chills),
+verify(bodyache),
+nl.
+
+tuberculosis :-
+verify(fever),
+verify(persistent_cough),
+verify(constant_fatigue),
+verify(weight_loss),
+verify(coughing_blood),
+verify(night_sweats),
+nl.
+
+pneumonia :-
+verify(cough),
+verify(fever),
+verify(shaking_chills),
+verify(shortness_of_breath),
+nl.							
+
+byssinosis :-
+verify(chest_tightness),
+verify(cough),
+verify(wheezing),
+nl.
+						
+pertusis :-
+verify(runny_nose),
+verify(mild_fever),
+nl.
+
+pneumoconiosis :-
+verify(chronic_cough),
+verify(shortness_of_breath),
+nl.
+
+sarcoidosis :-
+verify(dry_cough),
+verify(shortness_of_breath),
+verify(mild_chest_pain),
+verify(scaly_rash),
+verify(fever),
+verify(red_bumps_on_legs),
+verify(sore_eyes),
+verify(swollen_ankles),
+nl.
+
+asbestosis :-
+verify(chest_tightness),
+verify(shortness_of_breath),
+verify(chest_pain),
+verify(lack_of_appetite),
+nl.
+
+asthma :-
+verify(wheezing),
+verify(cough),
+verify(chest_tightness),
+verify(shortness_of_breath),
+nl.
+
+bronchiolitis :-
+verify(wheezing),
+verify(fever),
+verify(blue_skin),
+verify(rapid_breath),
+nl.
+						
+influenza :-
+verify(headache),
+verify(fever),
+verify(shaking_chills),
+verify(nasal_congestion),
+verify(runny_nose),
+verify(sore_throat),
+nl.
+
+lung_cancer :-
+verify(cough),
+verify(fever),
+verify(hoarseness),
+verify(chest_pain),
+verify(wheezing),
+verify(weight_loss),
+verify(lack_of_appetite),
+verify(coughing_blood),
+verify(headache),
+verify(shortness_of_breath),
+nl.
+
+covid :-
+verify(fever),
+verify(cough),
+verify(headache),
+verify(bodyache),  
+nl.
+
+
+diabetes :-
+verify(fatigue),
+verify(restlessness),
+nl.
+
+
+epilepsy :-
+verify(headache),
+verify(sunken_eyes),
+nl.
+
+glaucoma :-
+verify(fever),
+verify(sore_throat),
+nl.
+
+heart_stroke :-
+verify(fainting),
+verify(fever),
+nl.
+
+hyperthyroidism :-
+verify(restlessness),
+verify(sunken_eyes),
+nl.
+
+hypothermia :-
+verify(fatigue),
+verify(chest_pain),
+verify(sore_throat),
+nl.
+
+jaundice :-
+verify(cough),
+verify(headache),
+verify(fever),
+nl.
+
+sinusitis :-
+verify(sore_throat),
+verify(headache),
+verify(fever),
+nl.
+
+
+/* how to ask questions */
+ask(Question) :-
+write('Does the patient have following symptom:'),
+write(Question),
+write('? '),
+read(Response),
+nl,
+( (Response == yes ; Response == y)
+->
+assert(yes(Question)) ;
+assert(no(Question)), fail).
+
+:- dynamic yes/1,no/1.
+/*How to verify something */
+verify(S) :-
+(yes(S)
+ ->
+true ;
+(no(S)
+ ->
+fail ;
+ask(S))).
+/* undo all yes/no assertions*/
+%undo :- retract(yes(_)),fail.
+%undo :- retract(no(_)),fail.
+undo.
